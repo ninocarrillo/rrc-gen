@@ -11,4 +11,4 @@ python3 rrc-gen.py <rolloff rate> <span> <samples per symbol> <amplitude>
 ````
 python3 rrc-gen.py 0.2 8 6 25000
 ````
-![image](RRC02.png)
+![image](./RRC02.png)
