@@ -1,5 +1,5 @@
 # rrc-gen
-Generate taps for RRC filters
+Generate finite impulse response taps for square root raised cosine filters, using design parameters.
 ## Requires
 - Python3
 - NumPY
