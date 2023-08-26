@@ -9,10 +9,8 @@ def InitRRCFilter(this):
 	this['TimeStep'] = 1 / this['samples per symbol']
 	this['SymbolTime'] = 1
 	this['Time'] = np.arange(0, this['TapCount'] * this['TimeStep'], this['TimeStep']) - (this['TapCount'] * this['TimeStep'] / 2) + (this['TimeStep'] / 2)
-	this['SymbolTicks'] = np.arange(this['Time'][0] - (this['TimeStep'] / 2), this['Time'][this['TapCount'] - 1], this['SymbolTime'])
+	this['XTicks'] = np.arange(-math.ceil(this['symbol span'] / 2), math.ceil(this['symbol span'] / 2) + 1)
 	this['Taps'] = np.zeros(this['TapCount'])
-	# discontinuity:
-	# print(this['TimeStep'] / (4 * this['rolloff rate']))
 	index = 0
 	try:
 		asymptote = this['SymbolTime'] / (4 * this['rolloff rate'])
@@ -65,9 +63,15 @@ filter['amplitude'] = int(sys.argv[4])
 
 filter = InitRRCFilter(filter)
 filter['ScaledTaps'] = np.rint(filter['Taps'] * filter['amplitude'])
+filter['ScaledRC'] = np.rint(filter['RC'] * filter['amplitude'])
+
 plt.figure()
-plt.plot(filter['ScaledTaps'])
-plt.title('RRC')
+plt.plot(filter['Time'],filter['ScaledTaps'])
+plt.plot(filter['Time'],filter['ScaledRC'])
+plt.xticks(filter['XTicks'])
+plt.title(f'Raised Cosine Rolloff: {filter["rolloff rate"]}')
+plt.legend(['RRC', 'RC'])
+plt.grid()
 plt.show()
 
 #generate a new director for the reports
